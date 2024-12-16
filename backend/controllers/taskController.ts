@@ -7,7 +7,7 @@ import { TABLES, TASKS } from "../constants/databaseInfo";
 export function createTask(req: Request, res: Response) {
   const { startDate, subject } = req.body;
 
-  const sql = `INSERT INTO ${TABLES.TASKS} (${TASKS.START_DATE}, ${TASKS.SUBJECT}) VALUES (?, ?) RETURNING *`;
+  const sql = `INSERT INTO ${TABLES.TASKS} (${TASKS.START_DATE}, ${TASKS.SUBJECT}) VALUES (?, ?)`;
   const values = [startDate, subject];
 
   connection.query<ResultSetHeader>(sql, values, (err, result) => {
@@ -46,6 +46,7 @@ export function getAllTasks(req: Request, res: Response) {
     const tasksObject = {
       tasks: tasks,
     };
+
     res.status(StatusCodes.OK).json(tasksObject).end();
   });
 }
