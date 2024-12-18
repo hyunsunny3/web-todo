@@ -15,7 +15,10 @@ async function addTodo() {
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ subject : todoText, start_date : new Date().toISOString().split('T')[0] }),
+    body: JSON.stringify({ 
+      subject : todoText, 
+      start_date : new Date().toISOString().split('T')[0] 
+    }),
   });
   if (response.ok) {
     const newTodo = await response.json();
