@@ -22,7 +22,7 @@ async function addTodo() {
   });
   if (response.ok) {
     const newTodo = await response.json();
-    const li = createTodoItem(newTodo.subject);
+    const li = createTodoItem(newTodo);
     li.dataset.id = newTodo.id;
     
     // const li = createTodoItem(todoText);
@@ -30,16 +30,16 @@ async function addTodo() {
     todoInput.value = '';
     updateEmptyMessage();
   }else {
-    alert('메이데이!');
+    alert('메이데이! addTodo실패');
   }
 }
 
-function createTodoItem(todoText) {
+function createTodoItem(todo) {
   const li = document.createElement('li');
 
   li.innerHTML = `
-    <input type="checkbox">
-    <input type="text" value="${todoText}" readonly>
+    <input type="checkbox" ${todo.completed ? 'checked' : ''}>
+    <input type="text" value="${todo.subject}" readonly>
     <button class="edit">수정</button>
     <button class="delete">삭제</button>
   `;
@@ -106,7 +106,7 @@ function deleteTodoItem(li) {
       }
       updateEmptyMessage();
     } else {
-      alert('메이데이!');
+      alert('메이데이! deleteTodoItem실패');
     }
   });
 
@@ -135,12 +135,12 @@ async function loadTodos() {
   const response = await fetch('http://localhost:5555/tasks');
   if (response.ok) {
     const { tasks } = await response.json();
-    todos.forEach(todo => {
+    tasks.forEach(todo => {
       const li = createTodoItem(todo);
       document.getElementById('todoList').appendChild(li);
     });
   }else {
-    alert('메이데이!');
+    alert('메이데이! loadTodos실패');
   }
   // updateEmptyMessage();
 }
