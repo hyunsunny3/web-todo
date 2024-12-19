@@ -2,10 +2,12 @@ import dotenv from "dotenv";
 import mariadb, { ConnectionOptions } from "mysql2";
 
 dotenv.config();
+
 const connectionOptions: ConnectionOptions = {
-  host: "localhost",
-  user: "root",
+  user: process.env.MARIADB_USER,
+  host: process.env.MARIADB_HOST,
   password: process.env.MARIADB_PASSWORD,
+  port: 3306,
   database: "todo",
   dateStrings: true,
 };
